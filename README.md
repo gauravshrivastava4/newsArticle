@@ -31,8 +31,7 @@ curl -X 'POST' \
 -d '{
 "id": 0,
 "title": "string",
-"text": "string",
-"creationDate": "2021-06-21T11:16:35.666Z"
+"text": "string"
 }'
 
 ###/api/updateArticle
@@ -43,8 +42,7 @@ curl -X 'PUT' \
 -d '{
 "id": 0,
 "title": "string",
-"text": "string",
-"creationDate": "2021-06-21T11:15:21.239Z"
+"text": "string"
 }'
 
 ###/api/getNewsArticle/{id}
