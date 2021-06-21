@@ -2,6 +2,8 @@ package com.news.article.service;
 
 import com.news.article.exception.NewsArticleNotFoundException;
 import com.news.article.model.NewsArticle;
+import com.news.article.repository.NewsArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -11,7 +13,8 @@ import java.util.Map;
 @Service
 public class NewsArticleServiceImpl implements NewsArticleService{
 
-    private static Map<Integer, NewsArticle> articleMap = new HashMap<>();
+    @Autowired
+    private NewsArticleRepository newsArticleRepository;
 
     /**
      * This method will take newsarticle object from request and save it into the hashmap
@@ -19,41 +22,34 @@ public class NewsArticleServiceImpl implements NewsArticleService{
      * @param newsArticle
      */
     public void createNewsArticle(NewsArticle newsArticle){
-        articleMap.put(newsArticle.getId(),newsArticle);
+        newsArticleRepository.save(newsArticle);
     }
 
     /**
-     *
+     *  This method will update the news article on the basis of the request we receive.
      * @param newsArticle
      */
     public void updateNewsArticle(NewsArticle newsArticle) throws NewsArticleNotFoundException {
-        NewsArticle newsArticle1 = articleMap.get(newsArticle.getId());
-
-        if(newsArticle1 == null)
+        if(!newsArticleRepository.existsById(newsArticle.getId()))
             throw new NewsArticleNotFoundException("Article not present for id "+newsArticle.getId());
-
-        newsArticle1.setText(newsArticle.getText());
-        newsArticle1.setTitle(newsArticle1.getTitle());
-        articleMap.put(newsArticle1.getId(),newsArticle1);
+        newsArticleRepository.save(newsArticle);
     }
 
     /**
-     *
+     * This method will fetch the data from database on the basis of article id
      * @param id
-     * @return
+     * @return NewsArticle Object retrieved from the database
      */
     public NewsArticle getNewsArticle(Integer id) throws NewsArticleNotFoundException {
-        if(articleMap.get(id) == null)
-            throw new NewsArticleNotFoundException("Article Not Found");
-        return articleMap.get(id);
+        return newsArticleRepository.findById(id).get();
     }
 
     /**
-     *
-     * @return
+     * This method will fetch and return all news articles available in the database
+     * @return Collection of NewsArticle
      */
     public Collection<NewsArticle> getNewsArticles()
     {
-        return articleMap.values();
+        return (Collection<NewsArticle>) newsArticleRepository.findAll();
     }
 }

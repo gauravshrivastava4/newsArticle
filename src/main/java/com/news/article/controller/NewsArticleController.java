@@ -20,7 +20,9 @@ import java.util.Map;
 public class NewsArticleController {
 
     @Autowired
-    private NewsArticleService newsArticleService;
+    NewsArticleService newsArticleService;
+
+    private static Map<Integer, NewsArticle> articleMap = new HashMap<>();
 
     /**
      * This method will take NewsArticle Request body and will create new article

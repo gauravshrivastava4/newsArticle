@@ -1,18 +1,28 @@
 package com.news.article.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
 public class NewsArticle {
 
-    @NotNull(message = "id is mandatory")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
+
     @NotBlank(message = "title is mandatory")
     String title;
+
     @NotBlank(message = "text is mandatory")
     String text;
-    Date creationDate = new Date();
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable=false)
+    Date creationDate;
 
     public Integer getId() {
         return id;
