@@ -29,7 +29,6 @@ curl -X 'POST' \
 -H 'accept: */*' \
 -H 'Content-Type: application/json' \
 -d '{
-"id": 0,
 "title": "string",
 "text": "string"
 }'
