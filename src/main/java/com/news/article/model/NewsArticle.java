@@ -11,18 +11,20 @@ public class NewsArticle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     @NotBlank(message = "title is mandatory")
-    String title;
+    private String title;
 
     @NotBlank(message = "text is mandatory")
-    String text;
+    private String text;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
-    Date creationDate;
+    private Date creationDate;
+
+    private String articleRelevance;
 
     public Integer getId() {
         return id;
@@ -54,5 +56,13 @@ public class NewsArticle {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getArticleRelevance() {
+        return articleRelevance;
+    }
+
+    public void setArticleRelevance(String articleRelevance) {
+        this.articleRelevance = articleRelevance;
     }
 }

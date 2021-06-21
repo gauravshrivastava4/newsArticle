@@ -5,6 +5,7 @@ import com.news.article.model.NewsArticle;
 import com.news.article.repository.NewsArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class NewsArticleServiceImpl implements NewsArticleService{
      * @param newsArticle
      */
     public void createNewsArticle(NewsArticle newsArticle){
+        newsArticle = this.CalculateRelevance(newsArticle);
         newsArticleRepository.save(newsArticle);
     }
 
@@ -32,6 +34,7 @@ public class NewsArticleServiceImpl implements NewsArticleService{
     public void updateNewsArticle(NewsArticle newsArticle) throws NewsArticleNotFoundException {
         if(!newsArticleRepository.existsById(newsArticle.getId()))
             throw new NewsArticleNotFoundException("Article not present for id "+newsArticle.getId());
+        newsArticle = this.CalculateRelevance(newsArticle);
         newsArticleRepository.save(newsArticle);
     }
 
@@ -51,5 +54,29 @@ public class NewsArticleServiceImpl implements NewsArticleService{
     public Collection<NewsArticle> getNewsArticles()
     {
         return (Collection<NewsArticle>) newsArticleRepository.findAll();
+    }
+
+    /**
+     * This method will calculate article relevance
+     * if there are more ! than . set relevance to HOT
+     * if there are more , than . set relevance to BORING
+     * Else set relevance to STANDARD
+     * @param newsArticle
+     * @return newsArticle updated news article object with relevance values
+     */
+    private NewsArticle CalculateRelevance(NewsArticle newsArticle)
+    {
+        String relevance = "STANDARD";
+        String text = newsArticle.getText();
+        Integer exclaimCount = StringUtils.countOccurrencesOf(text, "!");
+        Integer fullStopsCount = StringUtils.countOccurrencesOf(text, ".");
+        Integer commaCount = StringUtils.countOccurrencesOf(text, ",");
+        if(exclaimCount > fullStopsCount)
+            relevance = "HOT";
+        else if(commaCount > fullStopsCount)
+            relevance = "BORING";
+
+        newsArticle.setArticleRelevance(relevance);
+        return newsArticle;
     }
 }
