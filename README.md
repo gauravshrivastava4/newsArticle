@@ -23,7 +23,7 @@ Application be accessed using url http://localhost:8080/
 ## API Documentation
 Documentation available on http://localhost:8080/api-docs.html
 
-###/api/createArticle
+### /api/createArticle
 curl -X 'POST' \
 'http://localhost:8080/api/createArticle' \
 -H 'accept: */*' \
@@ -34,7 +34,7 @@ curl -X 'POST' \
 "text": "string"
 }'
 
-###/api/updateArticle
+### /api/updateArticle
 curl -X 'PUT' \
 'http://localhost:8080/api/updateArticle' \
 -H 'accept: */*' \
@@ -45,12 +45,12 @@ curl -X 'PUT' \
 "text": "string"
 }'
 
-###/api/getNewsArticle/{id}
+### /api/getNewsArticle/{id}
 curl -X 'GET' \
 'http://localhost:8080/api/getNewsArticle/1' \
 -H 'accept: */*'
 
-###/api/getAllNewsArticles/
+### /api/getAllNewsArticles/
 curl -X 'GET' \
 'http://localhost:8080/api/getAllNewsArticles' \
 -H 'accept: */*'
