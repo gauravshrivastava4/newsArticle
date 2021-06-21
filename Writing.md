@@ -16,4 +16,4 @@ This article has listed 5 very useful softwares which can make developer's life 
 
 1. Create a Release Branch which will be deployed to production.
 2. Enable hooks on the release branch so that no one can directly push the code to the release branch without approval.
-3. Different users can created individual branches under the same repository but only after the pull request approval, their code can be merged. 
+3. Different users can create individual branches under the same repository but only after the pull request approval, their code can be merged. 
